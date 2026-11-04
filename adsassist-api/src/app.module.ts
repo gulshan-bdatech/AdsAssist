@@ -65,6 +65,7 @@ class HealthController {
             password: url.password ? decodeURIComponent(url.password) : undefined,
             db: Number(url.pathname.slice(1) || 0),
             tls: url.protocol === 'rediss:' ? {} : undefined,
+            family: 0,
           },
           prefix: 'adsassist',
         };

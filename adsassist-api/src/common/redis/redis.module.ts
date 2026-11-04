@@ -33,7 +33,7 @@ export class RedisService implements OnModuleDestroy {
 
   async subscribe(channel: string, handler: (message: string) => void): Promise<() => Promise<void>> {
     if (!this.subscriber) {
-      this.subscriber = new Redis(this.config.getOrThrow('REDIS_URL'), { lazyConnect: false });
+      this.subscriber = new Redis(this.config.getOrThrow('REDIS_URL'), { lazyConnect: false, family: 0 });
       this.subscriber.on('message', (ch: string, msg: string) => this.handlers.get(ch)?.forEach((h) => h(msg)));
       this.subscriber.on('error', (e: Error & { code?: string }) => this.logger.warn(`subscriber: ${e.message || e.code}`));
     }
@@ -66,7 +66,8 @@ export class RedisService implements OnModuleDestroy {
       provide: REDIS,
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
-        const client = new Redis(config.getOrThrow('REDIS_URL'), { maxRetriesPerRequest: 2 });
+        // family 0: resolve IPv4 and IPv6 (Railway's private network is IPv6-only).
+        const client = new Redis(config.getOrThrow('REDIS_URL'), { maxRetriesPerRequest: 2, family: 0 });
         client.on('error', (e: Error & { code?: string }) => new Logger('Redis').warn(e.message || e.code || 'connection error'));
         return client;
       },
