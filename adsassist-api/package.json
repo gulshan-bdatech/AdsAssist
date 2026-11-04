@@ -5,9 +5,9 @@
   "description": "AdsAssist API: live Google Ads + Meta reporting, tracking pixel, identity resolution, lead pipeline and conversion push",
   "scripts": {
     "build": "nest build",
-    "start": "nest start",
+    "start": "node dist/main.js",
     "dev": "nest start --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/main.js",
     "lint": "eslint \"src/**/*.ts\"",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"
