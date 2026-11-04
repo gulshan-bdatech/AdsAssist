@@ -1,0 +1,11 @@
+# Only the new AdsAssist projects are tracked. The old apps (adassist, Attribution) stay local.
+/*
+!/.gitignore
+!/README.md
+!/adsassist-api/
+!/adsassist-web/
+
+.DS_Store
+.env
+.env.*
+!.env.example
